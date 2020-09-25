@@ -6,18 +6,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lorenzoantonelli.tapdebloater.MainController">
-   <children>
-      <Label text="Disinstalla app corrente:" />
-      <Label fx:id="appName" text="App corrente:" />
-      <Label fx:id="packageName" text="PackageName:" />
-      <Button fx:id="uninstallCurrentAppButton" mnemonicParsing="false" onAction="#uninstallCurrentApp" prefWidth="146.0" text="Dininstalla " />
-      <Separator prefHeight="21.0" prefWidth="415.0" />
-      <Label text="Disinstalla dal PackageName:" />
-      <TextField fx:id="customApp" prefHeight="27.0" prefWidth="309.0" />
-      <Button fx:id="uninstallCustomAppButton" mnemonicParsing="false" onAction="#uninstallCustomApp" prefHeight="27.0" prefWidth="146.0" text="Disinstalla" />
-      <Separator prefHeight="21.0" prefWidth="415.0" />
-      <Label text="Disinstalla Facebook Services:" />
-      <Button fx:id="uninstallFacebookButton" mnemonicParsing="false" onAction="#uninstallFacebook" prefHeight="27.0" prefWidth="146.0" text="Disinstalla" />
-   </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0"
+      prefWidth="415.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.lorenzoantonelli.tapdebloater.MainController">
+   <Label text="Disinstalla app corrente:"/>
+   <Label fx:id="appNameLabel" text="App corrente:"/>
+   <Label fx:id="packageNameLabel" text="Package Name:"/>
+   <Button fx:id="uninstallCurrentAppButton" mnemonicParsing="false" onAction="#uninstallCurrentApp" prefWidth="146.0"
+           text="Dininstalla "/>
+   <Separator prefHeight="21.0" prefWidth="415.0"/>
+   <Label text="Disinstalla dal PackageName:"/>
+   <TextField fx:id="customApp" prefHeight="27.0" prefWidth="309.0"/>
+   <Button fx:id="uninstallCustomAppButton" mnemonicParsing="false" onAction="#uninstallCustomApp" prefHeight="27.0"
+           prefWidth="146.0" text="Disinstalla"/>
+   <Separator prefHeight="21.0" prefWidth="415.0"/>
+   <Label text="Disinstalla Facebook Services:"/>
+   <Button fx:id="uninstallFacebookButton" mnemonicParsing="false" onAction="#uninstallFacebook" prefHeight="27.0"
+           prefWidth="146.0" text="Disinstalla"/>
 </VBox>

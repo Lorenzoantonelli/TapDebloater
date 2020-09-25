@@ -98,16 +98,18 @@ public class AdbUtils {
      * Returns the name of the current app running in the device as a string.
      * @return the current app's name, as a string.
      */
-    public String getAppName(){
+    public String getAppName(String packageName){
 
-        String result=runShell(adbPath+" shell pm list packages -f | "+((isWindows)? "findstr ":"grep ")+getPackageName());
+        if (!packageName.equals("")) {
 
-        if (!result.equals("-1")){
-            String path=result.substring(result.indexOf("package:")+8,result.indexOf("apk")+3);
-            String name= runShell(adbPath+" shell /data/local/tmp/aapt-arm-pie d badging "+path+" | "+((isWindows)? "findstr":"grep")+" application-label").split("\n")[0];
-            return name.substring(name.indexOf(":'")+2,name.length()-1);
+            String result = runShell(adbPath + " shell pm list packages -f | " + ((isWindows) ? "findstr " : "grep ") + packageName);
+
+            if (!result.equals("-1")) {
+                String path = result.substring(result.indexOf("package:") + 8, result.indexOf("apk") + 3);
+                String name = runShell(adbPath + " shell /data/local/tmp/aapt-arm-pie d badging " + path + " | " + ((isWindows) ? "findstr" : "grep") + " application-label").split("\n")[0];
+                return name.substring(name.indexOf(":'") + 2, name.length() - 1);
+            }
         }
-
         return "";
     }
 

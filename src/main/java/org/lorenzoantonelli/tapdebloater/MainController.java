@@ -11,10 +11,10 @@ import java.util.concurrent.TimeUnit;
 public class MainController {
 
     @FXML
-    Label appName;
+    Label appNameLabel;
 
     @FXML
-    Label packageName;
+    Label packageNameLabel;
 
     @FXML
     TextField customApp;
@@ -35,8 +35,9 @@ public class MainController {
 
     public void updateCurrentApp(){
         Platform.runLater(() -> {
-            appName.setText("App corrente: "+utils.getAppName());
-            packageName.setText("Package name: "+utils.getPackageName());
+            String packageName= utils.getPackageName();
+            appNameLabel.setText("App corrente: "+utils.getAppName(packageName));
+            packageNameLabel.setText("Package name: "+packageName);
         });
     }
 
