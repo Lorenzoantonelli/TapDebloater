@@ -58,21 +58,6 @@ public class MainController {
             else scheduler2.shutdown();
         };
 
-        /*
-        Thread installToolThread=new Thread(()->{
-            while(!utils.checkTools())
-                utils.installTool();
-            Thread.currentThread().interrupt();
-        });
-
-         */
-
-        //currentAppThread.setDaemon(true);
-        //installToolThread.setDaemon(true);
-        // currentAppThread.start();
-        // installToolThread.start();
-
-        //ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleWithFixedDelay(currentApp,0,1,TimeUnit.SECONDS);
         scheduler2.scheduleWithFixedDelay(installTool,0,2,TimeUnit.SECONDS);
     }

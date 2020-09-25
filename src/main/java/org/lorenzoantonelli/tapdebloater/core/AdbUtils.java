@@ -29,7 +29,6 @@ public class AdbUtils {
         String os=(System.getProperty("os.name").toLowerCase());
         isWindows=os.contains("win");
         adbPath=(isWindows)? "adb.exe":((os.contains("mac"))?"./adb-macos":"./adb-linux");
-        //adbPath=(os.contains("mac"))?"./adb-macos":"./adb-linux";
     }
 
     /**
