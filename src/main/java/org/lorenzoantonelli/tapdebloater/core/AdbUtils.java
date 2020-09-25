@@ -32,6 +32,20 @@ public class AdbUtils {
     }
 
     /**
+     * Starts the adb server.
+     */
+    public void startAdbServer(){
+        runShell(adbPath + " start-server");
+    }
+
+    /**
+     * Kills the adb server
+     */
+    public void killAdbServer(){
+        runShell(adbPath+" kill-server");
+    }
+
+    /**
      * Runs the shell command given in input and returns the result as a String.
      * @param command the command to execute.
      * @return the result as a String, "-1" if the command failed.

@@ -61,6 +61,8 @@ public class MainController {
 
         scheduler.scheduleWithFixedDelay(currentApp,0,1,TimeUnit.SECONDS);
         scheduler2.scheduleWithFixedDelay(installTool,0,2,TimeUnit.SECONDS);
+
+        utils.startAdbServer();
     }
 
     @FXML

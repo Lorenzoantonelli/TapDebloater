@@ -31,8 +31,10 @@ public class Main extends Application {
 
     @Override
     public void stop(){
-        new AdbUtils().removeTool();
         MainController.shutdown();
+        AdbUtils temp=new AdbUtils();
+        temp.removeTool();
+        temp.killAdbServer();
     }
 
 }
