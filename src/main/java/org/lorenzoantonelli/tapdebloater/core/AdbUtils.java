@@ -137,6 +137,15 @@ public class AdbUtils {
     }
 
     /**
+     * Disables the application whose package name was given in input.
+     * @param packageName the package name of the app to disable.
+     * @return true if the application has been disabled, false otherwise.
+     */
+    public boolean disableApp(String packageName){
+        return (!runShell(adbPath+" shell pm disable-user --user 0 "+packageName).equals("-1"));
+    }
+
+    /**
      * Copy aapt-arm-pie (taken from https://github.com/Calsign/APDE/blob/master/APDE/src/main/assets/aapt-binaries/aapt-arm-pie)
      * in /data/local/tmp with 0755 permissions.
      */

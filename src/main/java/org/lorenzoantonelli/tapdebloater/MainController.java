@@ -23,7 +23,13 @@ public class MainController {
     Button uninstallCurrentAppButton;
 
     @FXML
+    Button disableCurrentAppButton;
+
+    @FXML
     Button uninstallCustomAppButton;
+
+    @FXML
+    Button disableCustomAppButton;
 
     @FXML
     Button uninstallFacebookButton;
@@ -47,7 +53,9 @@ public class MainController {
         Runnable currentApp=()->{
             boolean buttonStatus=!utils.findDevice();
             uninstallCurrentAppButton.setDisable(buttonStatus);
+            disableCurrentAppButton.setDisable(buttonStatus);
             uninstallCustomAppButton.setDisable(buttonStatus);
+            disableCustomAppButton.setDisable(buttonStatus);
             customApp.setDisable(buttonStatus);
             uninstallFacebookButton.setDisable(buttonStatus);
             updateCurrentApp();
@@ -72,10 +80,25 @@ public class MainController {
     }
 
     @FXML
+    public void disableCurrentApp(){
+        String packageName=utils.getPackageName();
+        new Alert(Alert.AlertType.NONE,(utils.disableApp(packageName)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+    }
+
+    @FXML
     public void uninstallCustomApp(){
         boolean status=utils.removeApp(customApp.getText());
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
         if (status){
+            customApp.clear();
+        }
+    }
+
+    @FXML
+    public void disableCustomApp(){
+        boolean status=utils.disableApp(customApp.getText());
+        new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+        if (status) {
             customApp.clear();
         }
     }
