@@ -13,7 +13,7 @@
    <Label fx:id="packageNameLabel" text="Package name:" />
    <HBox prefWidth="200.0" spacing="5.0">
       <Button fx:id="uninstallCurrentAppButton" mnemonicParsing="false" onAction="#uninstallCurrentApp"
-              prefWidth="146.0" text="Dininstalla "/>
+              prefWidth="146.0" text="Disinstalla "/>
       <Button fx:id="disableCurrentAppButton" mnemonicParsing="false" onAction="#disableCurrentApp" prefWidth="146.0"
               text="Disabilita"/>
    </HBox>
