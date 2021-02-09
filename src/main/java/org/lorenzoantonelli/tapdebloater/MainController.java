@@ -42,8 +42,10 @@ public class MainController {
     public void updateCurrentApp(){
         Platform.runLater(() -> {
             String packageName= utils.getPackageName();
-            appNameLabel.setText("App corrente: "+utils.getAppName(packageName));
-            packageNameLabel.setText("Package name: "+packageName);
+            if (!packageNameLabel.getText().equals("Package name: " + packageName)) {
+                appNameLabel.setText("App corrente: " + utils.getAppName(packageName));
+                packageNameLabel.setText("Package name: " + packageName);
+            }
         });
     }
 

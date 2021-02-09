@@ -3,6 +3,8 @@ package org.lorenzoantonelli.tapdebloater.core;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.List;
 
 public class AdbUtils {
 
@@ -20,6 +22,12 @@ public class AdbUtils {
      * Flag indicating whether the aapt-arm-pie file is present on the device.
      */
     private boolean hasTool=false;
+
+    /**
+     * List of apps that shouldn't be removed.
+     */
+    private final List<String> blacklist=Arrays.asList("com.android.settings ", "com.android.vending ");
+
 
     /**
      * @see #isWindows
@@ -134,7 +142,10 @@ public class AdbUtils {
      * @return true if the application has been removed, false otherwise.
      */
     public boolean removeApp(String packageName){
-        return (!runShell(adbPath+" shell pm uninstall -k --user 0 "+packageName).equals("-1"));
+        if (!blacklist.contains(packageName)) {
+            return (!runShell(adbPath + " shell pm uninstall -k --user 0 " + packageName).equals("-1"));
+        }
+        return false;
     }
 
     /**
@@ -143,7 +154,10 @@ public class AdbUtils {
      * @return true if the application has been disabled, false otherwise.
      */
     public boolean disableApp(String packageName){
-        return (!runShell(adbPath+" shell pm disable-user --user 0 "+packageName).equals("-1"));
+        if (!blacklist.contains(packageName)) {
+            return (!runShell(adbPath + " shell pm disable-user --user 0 " + packageName).equals("-1"));
+        }
+        return false;
     }
 
     /**
