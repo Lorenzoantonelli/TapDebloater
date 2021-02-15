@@ -26,8 +26,12 @@ public class AdbUtils {
     /**
      * List of apps that shouldn't be removed.
      */
-    private final List<String> blacklist=Arrays.asList("com.android.settings ", "com.android.vending ");
+    private final List<String> blacklist=Arrays.asList("com.android.settings", "com.android.vending");
 
+    /**
+     * Android version of the device.
+     */
+    private int androidVersion;
 
     /**
      * @see #isWindows
@@ -96,7 +100,6 @@ public class AdbUtils {
         }
 
         return false;
-
     }
 
     /**
@@ -104,14 +107,14 @@ public class AdbUtils {
      * @return the current app's package name, as a string.
      */
     public String getPackageName(){
-        String[] toParse=
-                runShell(adbPath+" shell dumpsys activity recents | " +
-                        ((isWindows)? "findstr":"grep")+" Recent").split("\n");
 
-        for(String toCheck:toParse){
-            if(toCheck.contains("Recent #0") && toCheck.contains("A")){
-                return toCheck.substring(toCheck.indexOf("A")+2,toCheck.indexOf("U"));
-            }
+        String toParse=
+                runShell(adbPath+" shell dumpsys activity recents | " +
+                        ((isWindows)? "findstr /c:\"Recent #0\"":"grep \"\\<Recent #0\\>\""));
+
+        if(toParse.contains("Recent #0") && (toParse.contains("A="))){
+            String temp=toParse.substring(toParse.indexOf("A="));
+            return temp.substring((androidVersion>10?temp.indexOf(":")+1:2),temp.indexOf("U=")-1);
         }
 
         return "";
@@ -128,7 +131,7 @@ public class AdbUtils {
             String result = runShell(adbPath + " shell pm list packages -f | " + ((isWindows) ? "findstr " : "grep ") + packageName);
 
             if (!result.equals("-1")) {
-                String path = result.substring(result.indexOf("package:") + 8, result.indexOf("apk") + 3);
+                String path = result.substring(result.indexOf("package:") + 8, result.indexOf(".apk") + 4);
                 String name = runShell(adbPath + " shell /data/local/tmp/aapt-arm-pie d badging " + path + " | " + ((isWindows) ? "findstr" : "grep") + " application-label").split("\n")[0];
                 return name.substring(name.indexOf(":'") + 2, name.length() - 1);
             }
@@ -163,11 +166,13 @@ public class AdbUtils {
     /**
      * Copy aapt-arm-pie (taken from https://github.com/Calsign/APDE/blob/master/APDE/src/main/assets/aapt-binaries/aapt-arm-pie)
      * in /data/local/tmp with 0755 permissions.
+     * Updates the device Android version.
      */
     public void installTool(){
         runShell(adbPath+" push aapt-arm-pie /data/local/tmp");
         if(!runShell(adbPath+" shell chmod 0755 /data/local/tmp/aapt-arm-pie").equals("-1")){
             hasTool=true;
+            androidVersion=Integer.parseInt(runShell("adb shell getprop ro.build.version.release").replace("\n",""));
         }
     }
 

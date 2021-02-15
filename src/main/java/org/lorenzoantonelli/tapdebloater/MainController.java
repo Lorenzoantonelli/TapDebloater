@@ -107,7 +107,8 @@ public class MainController {
 
     @FXML
     public void uninstallFacebook(){
-        boolean status=utils.removeApp("com.facebook.appmanager") |
+        boolean status=
+                utils.removeApp("com.facebook.appmanager") |
                 utils.removeApp("com.facebook.services") |
                 utils.removeApp("com.facebook.system");
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();

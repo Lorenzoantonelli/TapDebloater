@@ -13,15 +13,15 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        Scene scene = new Scene(loadFXML("mainFxml"));
+        Scene scene = new Scene(loadFXML());
         stage.setScene(scene);
         stage.setResizable(false);
         stage.setTitle("TapDebloater");
         stage.show();
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+    private static Parent loadFXML() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("mainFxml" + ".fxml"));
         return fxmlLoader.load();
     }
 
