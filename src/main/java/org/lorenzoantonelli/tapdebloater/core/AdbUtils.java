@@ -164,6 +164,18 @@ public class AdbUtils {
     }
 
     /**
+     * Restore a previously uninstalled app.
+     * @param packageName the package name of the app to restore.
+     * @return true if the application has been restored, false otherwise.
+     */
+    public boolean restoreApp(String packageName){
+        if (!packageName.equals("")) {
+            return (!runShell(adbPath + " shell cmd package install-existing " + packageName).equals("-1"));
+        }
+        return false;
+    }
+
+    /**
      * Copy aapt-arm-pie (taken from https://github.com/Calsign/APDE/blob/master/APDE/src/main/assets/aapt-binaries/aapt-arm-pie)
      * in /data/local/tmp with 0755 permissions.
      * Updates the device Android version.

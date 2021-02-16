@@ -34,10 +34,17 @@ public class MainController {
     @FXML
     Button uninstallFacebookButton;
 
+    @FXML
+    Button undoButton;
+
+    @FXML
+    Button undoButton2;
+
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static final ScheduledExecutorService scheduler2 = Executors.newSingleThreadScheduledExecutor();
 
     private final AdbUtils utils=new AdbUtils();
+    private String lastRemoved="";
 
     public void updateCurrentApp(){
         Platform.runLater(() -> {
@@ -56,8 +63,10 @@ public class MainController {
             boolean buttonStatus=!utils.findDevice();
             uninstallCurrentAppButton.setDisable(buttonStatus);
             disableCurrentAppButton.setDisable(buttonStatus);
+            undoButton.setDisable(buttonStatus);
             uninstallCustomAppButton.setDisable(buttonStatus);
             disableCustomAppButton.setDisable(buttonStatus);
+            undoButton2.setDisable(buttonStatus);
             customApp.setDisable(buttonStatus);
             uninstallFacebookButton.setDisable(buttonStatus);
             updateCurrentApp();
@@ -78,7 +87,9 @@ public class MainController {
     @FXML
     public void uninstallCurrentApp(){
         String packageName=utils.getPackageName();
-        new Alert(Alert.AlertType.NONE,(utils.removeApp(packageName)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+        boolean status=utils.removeApp(packageName);
+        new Alert(Alert.AlertType.NONE,(status? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+        if (status) lastRemoved=packageName;
     }
 
     @FXML
@@ -89,10 +100,12 @@ public class MainController {
 
     @FXML
     public void uninstallCustomApp(){
-        boolean status=utils.removeApp(customApp.getText());
+        String packageName=customApp.getText();
+        boolean status=utils.removeApp(packageName);
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
         if (status){
             customApp.clear();
+            lastRemoved=packageName;
         }
     }
 
@@ -111,6 +124,12 @@ public class MainController {
                 utils.removeApp("com.facebook.appmanager") |
                 utils.removeApp("com.facebook.services") |
                 utils.removeApp("com.facebook.system");
+        new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+    }
+
+    @FXML
+    public void restoreApp(){
+        boolean status=utils.restoreApp(lastRemoved);
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
     }
 
