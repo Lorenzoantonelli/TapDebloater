@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="241.0" prefWidth="415.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.lorenzoantonelli.tapdebloater.MainController">
-   <Label text="Disinstalla app corrente:" />
-   <Label fx:id="appNameLabel" text="App corrente:" />
-   <Label fx:id="packageNameLabel" text="Package name:" />
-   <HBox prefWidth="200.0" spacing="5.0">
-      <Button fx:id="uninstallCurrentAppButton" mnemonicParsing="false" onAction="#uninstallCurrentApp" prefWidth="146.0" text="Disinstalla " />
-      <Button fx:id="disableCurrentAppButton" mnemonicParsing="false" onAction="#disableCurrentApp" prefWidth="146.0" text="Disabilita" />
-      <Button fx:id="undoButton" mnemonicParsing="false" onAction="#restoreApp" prefWidth="146.0" text="Ripristina" />
-   </HBox>
-   <Separator prefHeight="21.0" prefWidth="415.0" />
-   <Label text="Disinstalla dal package name:" />
-   <TextField fx:id="customApp" prefHeight="27.0" prefWidth="309.0" />
-   <HBox prefWidth="200.0" spacing="5.0">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="org.lorenzoantonelli.tapdebloater.MainController">
+   <Label fx:id="appNameLabel" prefHeight="17.0" prefWidth="457.0" text="App corrente:" />
+   <HBox prefWidth="200.0" spacing="5.0" />
+   <TextField fx:id="packageNameTextField" prefHeight="27.0" prefWidth="309.0" />
+   <CheckBox fx:id="liveUpdateCheckBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="467.0" selected="true" text="Rileva app aperta" />
+   <HBox alignment="CENTER" prefWidth="200.0" spacing="12.0">
       <Button fx:id="uninstallCustomAppButton" mnemonicParsing="false" onAction="#uninstallCustomApp" prefHeight="27.0" prefWidth="146.0" text="Disinstalla" />
-      <Button fx:id="disableCustomAppButton" mnemonicParsing="false" onAction="#disableCustomApp" prefWidth="146.0" text="Disabilita" />
-      <Button fx:id="undoButton2" mnemonicParsing="false" onAction="#restoreApp" prefWidth="146.0" text="Ripristina" />
+      <Button fx:id="disableCustomAppButton" mnemonicParsing="false" onAction="#disableCustomApp" prefHeight="27.0" prefWidth="146.0" text="Disabilita" />
+      <Button fx:id="undoButton" mnemonicParsing="false" onAction="#restoreApp" prefHeight="27.0" prefWidth="146.0" text="Ripristina" />
    </HBox>
+   <Label fx:id="lastRemovedLabel" prefHeight="17.0" prefWidth="447.0" text="Ultima app rimossa:" />
    <Separator prefHeight="21.0" prefWidth="415.0" />
-   <Label text="Disinstalla Facebook Services:" />
-   <Button fx:id="uninstallFacebookButton" mnemonicParsing="false" onAction="#uninstallFacebook" prefHeight="27.0" prefWidth="146.0" text="Disinstalla" />
+   <HBox alignment="CENTER" spacing="20.0" translateX="-10.0">
+      <Label alignment="TOP_LEFT" prefHeight="17.0" text="Disinstalla Facebook Services:"/>
+      <Label text="Disinstalla Google Apps:"/>
+   </HBox>
+   <HBox alignment="CENTER" spacing="27.0" translateX="2.0">
+      <Button fx:id="uninstallFacebookButton" mnemonicParsing="false" onAction="#uninstallFacebook" prefHeight="27.0"
+              prefWidth="146.0" text="Disinstalla"/>
+      <Button fx:id="uninstallGappsButton" mnemonicParsing="false" onAction="#uninstallGapps" prefHeight="27.0"
+              prefWidth="146.0" text="Scegli..."/>
+   </HBox>
+   <padding>
+      <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
+   </padding>
 </VBox>

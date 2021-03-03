@@ -2,7 +2,11 @@ package org.lorenzoantonelli.tapdebloater;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.lorenzoantonelli.tapdebloater.core.AdbUtils;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,47 +15,35 @@ import java.util.concurrent.TimeUnit;
 public class MainController {
 
     @FXML
-    Label appNameLabel;
+    Label appNameLabel, lastRemovedLabel;
 
     @FXML
-    Label packageNameLabel;
+    CheckBox liveUpdateCheckBox;
 
     @FXML
-    TextField customApp;
+    TextField packageNameTextField;
 
     @FXML
-    Button uninstallCurrentAppButton;
-
-    @FXML
-    Button disableCurrentAppButton;
-
-    @FXML
-    Button uninstallCustomAppButton;
-
-    @FXML
-    Button disableCustomAppButton;
-
-    @FXML
-    Button uninstallFacebookButton;
-
-    @FXML
-    Button undoButton;
-
-    @FXML
-    Button undoButton2;
+    Button uninstallCustomAppButton, disableCustomAppButton, uninstallFacebookButton, undoButton, uninstallGappsButton;
 
     private static final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
     private static final ScheduledExecutorService scheduler2 = Executors.newSingleThreadScheduledExecutor();
 
     private final AdbUtils utils=new AdbUtils();
-    private String lastRemoved="";
 
     public void updateCurrentApp(){
         Platform.runLater(() -> {
-            String packageName= utils.getPackageName();
-            if (!packageNameLabel.getText().equals("Package name: " + packageName)) {
-                appNameLabel.setText("App corrente: " + utils.getAppName(packageName));
-                packageNameLabel.setText("Package name: " + packageName);
+            if (liveUpdateCheckBox.isSelected()){
+                packageNameTextField.setEditable(false);
+                String packageName = utils.getPackageName();
+                if (!packageNameTextField.getText().equals(packageName)) {
+                    appNameLabel.setText("App corrente: " + utils.getAppName(packageName));
+                    packageNameTextField.setText(packageName);
+                }
+            }
+            else{
+                packageNameTextField.setEditable(true);
+                appNameLabel.setText("App corrente: ");
             }
         });
     }
@@ -61,14 +53,13 @@ public class MainController {
 
         Runnable currentApp=()->{
             boolean buttonStatus=!utils.findDevice();
-            uninstallCurrentAppButton.setDisable(buttonStatus);
-            disableCurrentAppButton.setDisable(buttonStatus);
-            undoButton.setDisable(buttonStatus);
+            liveUpdateCheckBox.setDisable(buttonStatus);
             uninstallCustomAppButton.setDisable(buttonStatus);
             disableCustomAppButton.setDisable(buttonStatus);
-            undoButton2.setDisable(buttonStatus);
-            customApp.setDisable(buttonStatus);
+            undoButton.setDisable(buttonStatus);
+            packageNameTextField.setDisable(buttonStatus);
             uninstallFacebookButton.setDisable(buttonStatus);
+            uninstallGappsButton.setDisable(buttonStatus);
             updateCurrentApp();
         };
 
@@ -85,37 +76,22 @@ public class MainController {
     }
 
     @FXML
-    public void uninstallCurrentApp(){
-        String packageName=utils.getPackageName();
-        boolean status=utils.removeApp(packageName);
-        new Alert(Alert.AlertType.NONE,(status? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
-        if (status) lastRemoved=packageName;
-    }
-
-    @FXML
-    public void disableCurrentApp(){
-        String packageName=utils.getPackageName();
-        new Alert(Alert.AlertType.NONE,(utils.disableApp(packageName)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
-    }
-
-    @FXML
     public void uninstallCustomApp(){
-        String packageName=customApp.getText();
+        String packageName = packageNameTextField.getText();
         boolean status=utils.removeApp(packageName);
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
-        if (status){
-            customApp.clear();
-            lastRemoved=packageName;
-        }
+        if(status) lastRemovedLabel.setText("Ultima app rimossa: "+packageName);
+    }
+
+    public boolean uninstallCustomAppSilent(String packageName){
+        System.out.println(packageName);
+        return utils.removeApp(packageName);
     }
 
     @FXML
     public void disableCustomApp(){
-        boolean status=utils.disableApp(customApp.getText());
+        boolean status=utils.disableApp(packageNameTextField.getText());
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
-        if (status) {
-            customApp.clear();
-        }
     }
 
     @FXML
@@ -129,8 +105,26 @@ public class MainController {
 
     @FXML
     public void restoreApp(){
-        boolean status=utils.restoreApp(lastRemoved);
+        String packageName=packageNameTextField.getText();
+        boolean status=utils.restoreApp(packageName);
         new Alert(Alert.AlertType.NONE,((status)? "Operazione completata con successo!":"Operazione fallita!"), ButtonType.OK).show();
+        if (status && lastRemovedLabel.getText().equals("Ultima app rimossa: "+packageName)){
+            lastRemovedLabel.setText("Ultima app rimossa: ");
+        }
+    }
+
+    @FXML
+    public void uninstallGapps(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GoogleFXML.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.setResizable(false);
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void shutdown(){

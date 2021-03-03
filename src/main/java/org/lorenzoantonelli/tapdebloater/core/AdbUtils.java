@@ -184,7 +184,7 @@ public class AdbUtils {
         runShell(adbPath+" push aapt-arm-pie /data/local/tmp");
         if(!runShell(adbPath+" shell chmod 0755 /data/local/tmp/aapt-arm-pie").equals("-1")){
             hasTool=true;
-            androidVersion=Integer.parseInt(runShell("adb shell getprop ro.build.version.release").replace("\n",""));
+            androidVersion=Integer.parseInt(runShell(adbPath + " shell getprop ro.build.version.release").replace("\n",""));
         }
     }
 

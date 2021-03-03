@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="5.0"
+      xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.lorenzoantonelli.tapdebloater.GoogleController">
+   <padding>
+      <Insets bottom="7.0" left="7.0" right="7.0" top="7.0"/>
+   </padding>
+   <HBox spacing="20.0">
+      <VBox spacing="5.0">
+         <CheckBox fx:id="googleCheckbox" mnemonicParsing="false"
+                   text="Google"/>
+         <CheckBox fx:id="calendarCheckbox" mnemonicParsing="false"
+                   text="Google Calendar"/>
+         <CheckBox fx:id="gmailCheckbox" mnemonicParsing="false"
+                   text="Gmail"/>
+         <CheckBox fx:id="mapsCheckbox" mnemonicParsing="false"
+                   text="Google Maps"/>
+         <CheckBox fx:id="fotoCheckbox" mnemonicParsing="false"
+                   text="Google Foto"/>
+         <CheckBox fx:id="youtubeCheckbox" mnemonicParsing="false"
+                   text="Youtube"/>
+         <CheckBox fx:id="chromeCheckbox" mnemonicParsing="false"
+                   text="Google Chrome"/>
+         <CheckBox fx:id="driveCheckbox" mnemonicParsing="false"
+                   text="Google Drive"/>
+         <CheckBox fx:id="keepCheckbox" mnemonicParsing="false"
+                   text="Google Keep"/>
+         <CheckBox fx:id="libriCheckbox" mnemonicParsing="false"
+                   text="Google Play Libri"/>
+      </VBox>
+      <VBox spacing="5.0">
+         <CheckBox fx:id="payCheckbox" mnemonicParsing="false"
+                   text="Google Pay"/>
+         <CheckBox fx:id="traduttoreCheckbox" mnemonicParsing="false"
+                   text="Google Traduttore"/>
+         <CheckBox fx:id="documentiCheckbox" mnemonicParsing="false"
+                   text="Google Documenti"/>
+         <CheckBox fx:id="fogliCheckbox" mnemonicParsing="false"
+                   text="Google Fogli"/>
+         <CheckBox fx:id="presentazioniCheckbox" mnemonicParsing="false"
+                   text="Google Presentazioni"/>
+         <CheckBox fx:id="filmCheckbox" mnemonicParsing="false"
+                   text="Google Play Film"/>
+         <CheckBox fx:id="musicaCheckbox" mnemonicParsing="false"
+                   text="Google Play Musica"/>
+         <CheckBox fx:id="giochiCheckbox" mnemonicParsing="false"
+                   text="Google Play Giochi"/>
+         <CheckBox fx:id="newsCheckbox" mnemonicParsing="false"
+                   text="Google News"/>
+         <CheckBox fx:id="duoCheckbox" mnemonicParsing="false"
+                   text="Google Duo"/>
+      </VBox>
+   </HBox>
+   <HBox alignment="CENTER">
+      <Button fx:id="selectAllButton" mnemonicParsing="false" onAction="#selectAll" prefHeight="27.0"
+              prefWidth="282.5" text="Seleziona tutto"/>
+   </HBox>
+   <HBox alignment="CENTER">
+      <Button fx:id="deselectAllButton" mnemonicParsing="false" onAction="#deselectAll" prefHeight="27.0"
+              prefWidth="282.5" text="Deseleziona tutto"/>
+   </HBox>
+   <HBox alignment="CENTER">
+      <Button fx:id="uninstallButton" mnemonicParsing="false" onAction="#uninstallGapps" prefHeight="27.0"
+              prefWidth="282.5" text="Disinstalla"/>
+   </HBox>
+</VBox>
