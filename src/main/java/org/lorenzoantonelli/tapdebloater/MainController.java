@@ -116,7 +116,21 @@ public class MainController {
     @FXML
     public void uninstallGapps(){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GoogleFXML.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GoogleFxml.fxml"));
+            Parent root1 = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root1));
+            stage.setResizable(false);
+            stage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void connectAdb(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("adbConnectFxml.fxml"));
             Parent root1 = fxmlLoader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root1));
