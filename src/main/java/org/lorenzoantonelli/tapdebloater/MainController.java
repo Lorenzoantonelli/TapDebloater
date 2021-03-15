@@ -51,6 +51,8 @@ public class MainController {
     @FXML
     public void initialize(){
 
+        utils.startAdbServer();
+
         Runnable currentApp=()->{
             boolean buttonStatus=!utils.findDevice();
             liveUpdateCheckBox.setDisable(buttonStatus);
@@ -72,7 +74,6 @@ public class MainController {
         scheduler.scheduleWithFixedDelay(currentApp,0,1,TimeUnit.SECONDS);
         scheduler2.scheduleWithFixedDelay(installTool,0,2,TimeUnit.SECONDS);
 
-        utils.startAdbServer();
     }
 
     @FXML

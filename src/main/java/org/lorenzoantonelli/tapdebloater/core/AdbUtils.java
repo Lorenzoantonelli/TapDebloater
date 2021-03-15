@@ -208,7 +208,6 @@ public class AdbUtils {
      * @param passCode the device's passcode
      */
     public void connectWirelessAdb(String ipPort, String passCode){
-        System.out.println(adbPath + " pair " + ipPort + "\n" + passCode);
         String homeDirectory = System.getProperty("user.home");
         try {
             Runtime.getRuntime().exec(String.format(adbPath + " pair " + ipPort + "\n" + passCode, homeDirectory));
